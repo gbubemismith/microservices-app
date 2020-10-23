@@ -12,5 +12,4 @@ services:
     build:
       context: .
       dockerfile: src/Catalog/Catalog.API/Dockerfile
-    ports:
-      - "8000:80"
+   
