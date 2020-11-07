@@ -6,10 +6,19 @@ services:
   catalogDb:
     container_name: catalogDb
     image: mongo
+  basketDb:
+    container_name: basketDb
+    image: redis
     
   catalogapi:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
       dockerfile: src/Catalog/Catalog.API/Dockerfile
+      
+  basketapi:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: src/Basket/Basket.API/Dockerfile
    

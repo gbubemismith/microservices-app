@@ -10,6 +10,11 @@ services:
       - ~/mongodb/data:/data/db   
     ports: 
       - "27017:27017"
+  basketDb:
+    container_name: basketDb
+    restart: always
+    ports: 
+      - "6379:6379"
 
   catalogapi:
     image: catalogapi
@@ -25,3 +30,19 @@ services:
       - catalogDb
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
+      
+  basketapi:
+    image: basketapi
+    build:
+      context: .
+      dockerfile: src/Basket/Basket.API/Dockerfile
+    ports:
+      - "8001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:Redis=basketDb:6379"
+    depends_on: 
+      - basketDb
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+

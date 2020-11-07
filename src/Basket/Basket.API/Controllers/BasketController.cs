@@ -21,6 +21,9 @@ namespace Basket.API.Controllers
         {
             var basket = await _basketRepo.GetBasket(username);
 
+            if (basket == null)
+                return Ok(new BasketCartModel(username));
+
             return Ok(basket);
         }
 
