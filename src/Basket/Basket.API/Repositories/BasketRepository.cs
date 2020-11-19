@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Basket.API.Data.Interfaces;
-using Basket.API.Models;
+using Basket.API.Entities;
 using Basket.API.Repositories.Interfaces;
 using Newtonsoft.Json;
 
@@ -36,7 +36,7 @@ namespace Basket.API.Repositories
             if (!result)
                 return null;
 
-            
+
             return await GetBasket(basketCart.Username);
 
         }
@@ -46,6 +46,6 @@ namespace Basket.API.Repositories
             return await _context.Redis.KeyDeleteAsync(username);
         }
 
-        
+
     }
 }

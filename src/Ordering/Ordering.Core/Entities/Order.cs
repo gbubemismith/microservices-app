@@ -1,6 +1,8 @@
-namespace Basket.API.Models
+using Ordering.Core.Entities.Base;
+
+namespace Ordering.Core.Entities
 {
-    public class BasketCheckoutModel
+    public class Order : Entity
     {
         public string Username { get; set; }
         public decimal TotalPrice { get; set; }
@@ -21,6 +23,5 @@ namespace Basket.API.Models
         public string Expiration { get; set; }
         public string CVV { get; set; }
         public int PaymentMethod { get; set; }
-        
     }
 }

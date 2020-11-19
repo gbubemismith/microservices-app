@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Catalog.API.Models;
+using Catalog.API.Entities;
 using Catalog.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -38,7 +38,7 @@ namespace Catalog.API.Controllers
                 _logger.LogError($"Product with id {id}, not found");
                 return NotFound();
             }
-                
+
 
             return Ok(proudct);
 

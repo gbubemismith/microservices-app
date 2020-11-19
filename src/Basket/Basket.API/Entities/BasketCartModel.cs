@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Basket.API.Models
+namespace Basket.API.Entities
 {
     public class BasketCartModel
     {
@@ -16,12 +16,12 @@ namespace Basket.API.Models
         public string Username { get; set; }
         public List<BasketCartItem> Items { get; set; }
 
-        public decimal TotalPrice 
-        { 
-            get 
+        public decimal TotalPrice
+        {
+            get
             {
                 decimal totalPrice = 0;
-                
+
                 foreach (var item in Items)
                 {
                     totalPrice += item.Price * item.Quantity;
@@ -29,7 +29,7 @@ namespace Basket.API.Models
 
                 return totalPrice;
             }
-            
+
         }
     }
 }

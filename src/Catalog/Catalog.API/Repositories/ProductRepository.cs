@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Catalog.API.Data.Interfaces;
-using Catalog.API.Models;
+using Catalog.API.Entities;
 using Catalog.API.Repositories.Interfaces;
 using MongoDB.Driver;
 
@@ -62,6 +62,6 @@ namespace Catalog.API.Repositories
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
 
-        
+
     }
 }

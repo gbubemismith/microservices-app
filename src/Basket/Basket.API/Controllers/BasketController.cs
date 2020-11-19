@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using Basket.API.Models;
+using Basket.API.Entities;
 using Basket.API.Repositories.Interfaces;
 using EventBusRabbitMQ.Events;
 using EventBusRabbitMQ.Helpers;
@@ -56,7 +56,7 @@ namespace Basket.API.Controllers
         [HttpPost("Checkout")]
         public async Task<IActionResult> Checkout(BasketCheckoutModel basketCheckout)
         {
-            
+
             //get total price of basket
             var basket = await _basketRepo.GetBasket(basketCheckout.Username);
 
@@ -68,7 +68,7 @@ namespace Basket.API.Controllers
 
             if (!basketRemoved)
                 return BadRequest();
-            
+
             //send checkout event to rabbitMq
             var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
             eventMessage.RequestId = Guid.NewGuid();
@@ -80,7 +80,7 @@ namespace Basket.API.Controllers
             }
             catch (System.Exception)
             {
-                
+
                 throw;
             }
 

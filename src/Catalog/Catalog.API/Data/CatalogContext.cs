@@ -1,5 +1,5 @@
 using Catalog.API.Data.Interfaces;
-using Catalog.API.Models;
+using Catalog.API.Entities;
 using Catalog.API.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -8,7 +8,7 @@ namespace Catalog.API.Data
 {
     public class CatalogContext : ICatalogContext
     {
-        
+
         public CatalogContext(IOptions<CatalogDatabaseSettings> settings)
         {
             var client = new MongoClient(settings.Value.ConnectionString);
@@ -18,6 +18,6 @@ namespace Catalog.API.Data
             CatalogContextSeed.SeedData(Products);
 
         }
-        public IMongoCollection<ProductModel> Products {get; }
+        public IMongoCollection<ProductModel> Products { get; }
     }
 }

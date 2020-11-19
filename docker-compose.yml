@@ -9,6 +9,9 @@ services:
   basketDb:
     container_name: basketDb
     image: redis
+  rabbitMq:
+    container_name: rabbitMq
+    image: rabbitmq:3-management-alpine
     
   catalogapi:
     image: ${DOCKER_REGISTRY-}catalogapi
