@@ -3,7 +3,7 @@ namespace Ordering.Core.Entities.Base
     public abstract class EntityBase<T> : IEntityBase<T>
     {
         public virtual T Id { get; protected set; }
-        int? _requestedHashNode;
+        int? _requestedHashCode;
 
         public bool IsTransient()
         {
@@ -28,7 +28,7 @@ namespace Ordering.Core.Entities.Base
                 return false;
             else
                 return item == this;
-            
+
         }
 
         public override int GetHashCode()
@@ -44,7 +44,7 @@ namespace Ordering.Core.Entities.Base
                 return base.GetHashCode();
         }
 
-        public static bool operator ==(EntityBase<TId> left, EntityBase<TId> right)
+        public static bool operator ==(EntityBase<T> left, EntityBase<T> right)
         {
             if (Equals(left, null))
                 return Equals(right, null) ? true : false;
@@ -52,7 +52,7 @@ namespace Ordering.Core.Entities.Base
                 return left.Equals(right);
         }
 
-        public static bool operator !=(EntityBase<TId> left, EntityBase<TId> right)
+        public static bool operator !=(EntityBase<T> left, EntityBase<T> right)
         {
             return !(left == right);
         }
