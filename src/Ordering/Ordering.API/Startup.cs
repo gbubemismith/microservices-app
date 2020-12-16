@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Ordering.Application.Handlers;
 using Ordering.Infrastructure.Data;
 
 namespace Ordering.API
@@ -33,6 +37,10 @@ namespace Ordering.API
                                     x.UseMySql(Configuration.GetConnectionString("OrderConnection"),
                                     b => b.MigrationsAssembly("Ordering.API")),
                                     ServiceLifetime.Singleton);
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddMediatR(typeof(CheckoutOrderHandler).GetTypeInfo().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
