@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using EventBusRabbitMQ;
+using EventBusRabbitMQ.Producer;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Ordering.API.Helpers;
+using Ordering.API.RabbitMQ;
 using Ordering.Application.Handlers;
 using Ordering.Core.Repositories;
 using Ordering.Core.Repositories.Base;
@@ -45,15 +48,15 @@ namespace Ordering.API
                                     b => b.MigrationsAssembly("Ordering.API")),
                                     ServiceLifetime.Singleton);
 
-            services.AddAutoMapper(typeof(Startup));
-
-            services.AddMediatR(typeof(CheckoutOrderHandler).GetTypeInfo().Assembly);
-
-            services.AddTransient<IOrderRepository, OrderRepository>();
 
             //for mediatr
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
+            services.AddTransient<IOrderRepository, OrderRepository>();
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddMediatR(typeof(CheckoutOrderHandler).GetTypeInfo().Assembly);
 
             services.AddSwaggerGen(c =>
             {
@@ -81,6 +84,8 @@ namespace Ordering.API
 
             });
 
+            services.AddSingleton<EventBusRabbitMqConsumer>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,6 +106,8 @@ namespace Ordering.API
             {
                 endpoints.MapControllers();
             });
+
+            app.UseRabbitListener();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
